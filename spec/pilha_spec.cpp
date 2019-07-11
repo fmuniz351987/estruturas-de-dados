@@ -1,5 +1,5 @@
 #include <iostream>
-#include "pilha.hpp"
+#include "../src/pilha.hpp"
 
 int main() {
     pilha::Pilha pilha_de_testes;
