@@ -23,7 +23,13 @@ Fila::Fila() {
 }
 
 Fila::~Fila() {
-    // TODO
+    Registro *aux;
+
+    while (not vazia()) {
+        aux = desenfileira();
+        delete aux;
+    }
+    delete cabeca;
 }
 
 bool Fila::vazia() {
@@ -60,3 +66,17 @@ Registro* Fila::desenfileira() {
 
     return reg;
 }
+
+std::ostream& operator<<(std::ostream& out, fila::Fila& fila_impressa) {
+    if (fila_impressa.vazia()) return out;
+
+    No* aux = fila_impressa.cabeca->tras;
+    for (unsigned int i = 1; i < fila_impressa.tamanho; i++) {
+        out << *aux->registro << ' ';
+        aux = aux->tras;
+    }
+    out << *aux->registro;
+
+    return out;
+}
+
