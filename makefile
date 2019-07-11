@@ -1,6 +1,8 @@
 CC = g++
 CFLAGS = -Wall -pedantic
 
+specs: fila_spec.out pilha_spec.out
+
 fila_spec.out: fila_spec.o fila.o
 	$(CC) $(CFLAGS) -o fila_spec.out fila.o fila_spec.o
 fila_spec.o: fila_spec.cpp fila.o

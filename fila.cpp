@@ -79,4 +79,3 @@ std::ostream& operator<<(std::ostream& out, fila::Fila& fila_impressa) {
 
     return out;
 }
-

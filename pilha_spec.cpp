@@ -24,6 +24,15 @@ int main() {
         erros++;
     }
 
+    for (int i = 0; i < 10; i++) {
+        pilha_de_testes.desempilha();
+    }
+
+    if (pilha_de_testes.tamanho != 90) {
+        std::cout << "O metodo desempilha nao altera o tamanho da pilha adequadamente.\n";
+        erros++;
+    }
+
     std::cout << pilha_de_testes << '\n';
 
     std::cout << "Foram encontrados " << erros << " erros.\n";
