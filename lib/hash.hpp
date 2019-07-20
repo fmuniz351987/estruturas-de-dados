@@ -46,7 +46,7 @@ template <typename ItemType, typename KeyType> class Hash {
     ItemType *remove(KeyType key) {
         Node *node = search_list(key)->remove(key);
         ItemType *item;
-        if (!node) return nullptr;    
+        if (!node) return nullptr;
         item = node->item;
         size--;
         delete node;
