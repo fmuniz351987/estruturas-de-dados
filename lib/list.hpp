@@ -6,10 +6,10 @@ template <typename ItemType, typename KeyType = unsigned> class List {
     public:
 
     class Node {
-        friend class List<ItemType>;
+        friend class List<ItemType, KeyType>;
         Node *next = nullptr;
         Node *prev = nullptr;
-        List<ItemType> *list;
+        List<ItemType, KeyType> *list;
 
         public:
         ItemType *item = nullptr;

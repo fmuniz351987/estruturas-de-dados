@@ -79,17 +79,17 @@ void test_string_cast() {
     std::clog << list << std::endl;
 }
 
-void print_results() {
-    std::clog << "Total tests: " << tests << std::endl;
-    std::clog << "Total errors: " << errors << std::endl;
-}
-
 void test_insert_with_keys() {
     IntList list;
     list.insert(new int(100), 11);
     list.insert(new int(20), 99);
     list.insert(new int(2000), 1);
     assert(*list.search(11)->item == 100);
+}
+
+void print_results() {
+    std::clog << "Total tests: " << tests << std::endl;
+    std::clog << "Total errors: " << errors << std::endl;
 }
 
 int main() {
