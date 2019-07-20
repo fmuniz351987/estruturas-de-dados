@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../src/stack.hpp"
+#include "../lib/stack.hpp"
 
 typedef stack::Stack<int> IntStack;
 
