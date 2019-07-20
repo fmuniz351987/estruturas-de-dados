@@ -1,11 +1,11 @@
 #pragma once
+#include <string>
 
-namespace stack {
-    template <typename ItemType> class Node {
-        template <typename U> friend class Stack;
-
+template <typename ItemType> class Stack {
+    class Node {
+        friend class Stack<ItemType>;
         ItemType *item = nullptr;
-        Node<ItemType> *next = nullptr;
+        Node *next = nullptr;
 
         Node () {}
 
@@ -14,51 +14,68 @@ namespace stack {
         }
     };
 
-    template <typename ItemType> class Stack {
-        unsigned size = 0;
-        Node<ItemType> *head = new Node<ItemType>;
+    unsigned size = 0;
+    Node *head = new Node;
 
-        public:
-        Stack() {}
+    public:
+    Stack() {}
 
-        ~Stack() {
-            ItemType *item;
+    ~Stack() {
+        clear();
+        delete head;
+    }
 
-            while(!empty()) {
-                item = pop();
-                delete item;
-            }
-            delete head;
+    bool empty() {
+        return size == 0;
+    }
+
+    unsigned get_size() {
+        return size;
+    }
+
+    void push(ItemType *item) {
+        Node *node = new Node(item);
+        node->next = head->next;
+        head->next = node;
+        size++;
+    }
+
+    ItemType *pop() {
+        if (empty()) return nullptr;
+        Node *node = head->next;
+        ItemType *item = node->item;
+        head->next = node->next;
+        delete node;
+        size--;
+        return item;
+    }
+
+    ItemType *peek() {
+        if (empty()) return nullptr;
+        return head->next->item;
+    }
+
+    void clear() {
+        ItemType *item;
+        while(!empty()) {
+            item = pop();
+            delete item;
         }
+    }
 
-        bool empty() {
-            return size == 0;
+    operator std::string() {
+        std::string s;
+        Node *node = head->next;
+        for(unsigned i = 0; i < size - 1; i++) {
+            s += std::to_string(*node->item);
+            s += ' ';
+            node = node->next;
         }
+        s += std::to_string(*node->item);
+        return s;
+    }
+};
 
-        unsigned get_size() {
-            return size;
-        }
-
-        void push(ItemType *item) {
-            Node<ItemType> *node = new Node<ItemType>(item);
-            node->next = head->next;
-            head->next = node;
-            size++;
-        }
-
-        ItemType *pop() {
-            if (empty()) return nullptr;
-            Node<ItemType> *node = head->next;
-            ItemType *item = node->item;
-            head->next = node->next;
-            delete node;
-            size--;
-            return item;
-        }
-
-        ItemType *peek() {
-            if (empty()) return nullptr;
-            return head->next->item;
-        }
-    };
+template <typename T> std::ostream& operator<<(std::ostream& out, Stack<T>& s) {
+    return out << std::string(s);
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../lib/stack.hpp"
 
-typedef stack::Stack<int> IntStack;
+typedef Stack<int> IntStack;
 
 int tests = 0;
 int errors = 0;
@@ -48,6 +48,14 @@ void test_push_and_pop() {
     assert(istack.get_size() == 80);
 }
 
+void test_string_cast() {
+    IntStack istack;
+    for (int i = 0;i < 10; i++) 
+        istack.push(new int(i));
+    std::cout << std::string(istack) << std::endl;
+    std::cout << istack << std::endl;
+}
+
 void print_results() {
     std::clog << "Total tests: " << tests << std::endl;
     std::clog << "Total errors: " << errors << std::endl;
@@ -58,7 +66,7 @@ int main() {
     test_push_items();
     test_pop_empty();
     test_push_and_pop();
-
+    test_string_cast();
     print_results();
     return 0;
 }
