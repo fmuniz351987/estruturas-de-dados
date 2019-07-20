@@ -1,7 +1,9 @@
 CC = g++ -Wall -pedantic
 
-all: spec/queue_spec.out spec/stack_spec.out
+all: spec/queue_spec.out spec/stack_spec.out spec/list_spec.out
 
+spec/list_spec.out: spec/list_spec.cpp lib/list.hpp
+	$(CC) spec/list_spec.cpp -o spec/list_spec.out
 spec/queue_spec.out: spec/queue_spec.cpp lib/queue.hpp
 	$(CC) spec/queue_spec.cpp -o spec/queue_spec.out
 spec/stack_spec.out: spec/stack_spec.cpp lib/stack.hpp

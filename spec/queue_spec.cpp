@@ -16,48 +16,48 @@ bool assert(bool expr) {
 }
 
 void test_init_empty() {
-    IntQueue iq;
-    assert(iq.get_size() == 0);
-    assert(iq.empty());
+    IntQueue queue;
+    assert(queue.get_size() == 0);
+    assert(queue.empty());
 }
 
 void test_enqueue() {
-    IntQueue iq;
+    IntQueue queue;
     for (int i = 0; i < 100; i++) {
-        iq.enqueue(new int(i));
+        queue.enqueue(new int(i));
     }
-    assert(iq.get_size() == 100);
-    assert(!iq.empty());
+    assert(queue.get_size() == 100);
+    assert(!queue.empty());
 }
 
 void test_dequeue() {
-    IntQueue iq;
+    IntQueue queue;
     int *removed;
     for (int i = 0; i < 100; i++) {
-        iq.enqueue(new int(i));
+        queue.enqueue(new int(i));
     }
     for (int i = 0; i < 20; i++) {
-        removed = iq.dequeue();
+        removed = queue.dequeue();
         assert(i == *removed);
         delete removed;
     }
-    assert(iq.get_size() == 80);
+    assert(queue.get_size() == 80);
 }
 
 void test_clear() {
-    IntQueue iq;
+    IntQueue queue;
     for (int i = 0; i < 100; i++)
-        iq.enqueue(new int(i));
-    iq.clear();
-    assert(iq.get_size() == 0);
+        queue.enqueue(new int(i));
+    queue.clear();
+    assert(queue.get_size() == 0);
 }
 
 void test_string_cast() {
-    IntQueue iq;
+    IntQueue queue;
     for (int i = 0; i < 10; i++)
-        iq.enqueue(new int(i));
-    std::cout << std::string(iq) << std::endl;
-    std::cout << iq << std::endl;
+        queue.enqueue(new int(i));
+    std::cout << std::string(queue) << std::endl;
+    std::cout << queue << std::endl;
 }
 
 void print_results() {

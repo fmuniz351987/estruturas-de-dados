@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 template <typename ItemType> class Queue {
     class Node {
@@ -38,9 +39,7 @@ template <typename ItemType> class Queue {
         return size == 0;
     }
 
-    unsigned get_size() {
-        return size;
-    }
+    unsigned get_size() {return size;}
 
     void enqueue(ItemType *item) {
         Node *last = sentinel->get_prev(),

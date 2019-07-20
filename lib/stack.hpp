@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 
 template <typename ItemType> class Stack {
@@ -65,6 +66,7 @@ template <typename ItemType> class Stack {
 
     operator std::string() {
         std::string s;
+        if(empty()) return s;
         Node *node = head->next;
         for(unsigned i = 0; i < size - 1; i++) {
             s += std::to_string(*node->item);

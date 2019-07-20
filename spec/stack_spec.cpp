@@ -16,44 +16,44 @@ bool assert(bool expr) {
 }
 
 void test_init_empty() {
-    IntStack istack;
-    assert(istack.empty());
+    IntStack stack;
+    assert(stack.empty());
 }
 
 void test_push_items() {
-    IntStack istack;
+    IntStack stack;
     for (int i = 0; i < 100; i++) 
-        istack.push(new int(i));
-    assert(istack.get_size() == 100);
+        stack.push(new int(i));
+    assert(stack.get_size() == 100);
 }
 
 void test_pop_empty() {
-    IntStack istack;
-    assert(istack.pop() == nullptr);
-    assert(istack.get_size() == 0);
+    IntStack stack;
+    assert(stack.pop() == nullptr);
+    assert(stack.get_size() == 0);
 }
 
 void test_push_and_pop() {
-    IntStack istack;
+    IntStack stack;
     int *removido;
     for (int i = 0; i < 100; i++) {
-        istack.push(new int(i));
+        stack.push(new int(i));
     }
     for (int i = 0; i < 20; i++) {
-        removido = istack.pop();
+        removido = stack.pop();
         assert(*removido == 99 - i);
         delete removido;
     }
-    assert(*istack.peek() == 79);
-    assert(istack.get_size() == 80);
+    assert(*stack.peek() == 79);
+    assert(stack.get_size() == 80);
 }
 
 void test_string_cast() {
-    IntStack istack;
+    IntStack stack;
     for (int i = 0;i < 10; i++) 
-        istack.push(new int(i));
-    std::cout << std::string(istack) << std::endl;
-    std::cout << istack << std::endl;
+        stack.push(new int(i));
+    std::cout << std::string(stack) << std::endl;
+    std::cout << stack << std::endl;
 }
 
 void print_results() {
