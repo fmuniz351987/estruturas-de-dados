@@ -84,6 +84,14 @@ void print_results() {
     std::clog << "Total errors: " << errors << std::endl;
 }
 
+void test_insert_with_keys() {
+    IntList list;
+    list.insert(new int(100), 11);
+    list.insert(new int(20), 99);
+    list.insert(new int(2000), 1);
+    assert(*list.search(11)->item == 100);
+}
+
 int main() {
     test_init_empty();
     test_insert_items();
@@ -91,6 +99,7 @@ int main() {
     test_remove_items();
     test_remove_empty();
     test_string_cast();
+    test_insert_with_keys();
     print_results();
     return 0;
 }

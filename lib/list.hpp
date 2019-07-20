@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-template <typename ItemType> class List {
+template <typename ItemType, typename KeyType = unsigned> class List {
     public:
 
     class Node {
@@ -13,11 +13,13 @@ template <typename ItemType> class List {
 
         public:
         ItemType *item = nullptr;
+        KeyType key;
 
         Node() {}
 
-        Node(ItemType *item) {
+        Node(ItemType *item, KeyType key) {
             this->item = item;
+            this->key = key;
         }
 
         Node *get_next() {return next;}
@@ -29,12 +31,19 @@ template <typename ItemType> class List {
     private:
 
     Node* create_node(ItemType *item = nullptr) {
-        Node* new_node = new Node(item);
+        Node* new_node = new Node(item, current_key);
+        new_node->list = this;
+        return new_node;
+    }
+
+    Node* create_node(ItemType *item, KeyType key) {
+        Node* new_node = new Node(item, key);
         new_node->list = this;
         return new_node;
     }
 
     unsigned size = 0;
+    unsigned current_key = 0;
     Node *sentinel = create_node();
 
     public:
@@ -66,29 +75,58 @@ template <typename ItemType> class List {
         node2->set_next(aux.get_next());
     }
 
-    Node* search(unsigned id) {
-        Node *node = sentinel;
-        if (empty()) return nullptr;
-        id %= size;
-        for (unsigned i = 0; i <= id; i++) {
-            node = node->get_next();
+    Node *search(KeyType key) {
+        Node *curr = first();
+        while (curr != sentinel) {
+            if (curr->key == key) return curr;
+            curr = curr->get_next();
         }
-        return node;
+        return nullptr;
     }
 
-    Node *insert(ItemType *item) {
-        Node *new_node = create_node(item),
-             *last = sentinel->get_prev();
+    Node *first() {
+        return sentinel->get_next();
+    }
+
+    Node *last() {
+        return sentinel->get_prev();
+    }
+
+    Node *insert(ItemType *item, KeyType key) {
+        if (search(key)) return nullptr;    //falha se o node já existe
+        Node *new_node = create_node(item, key),
+             *old_last = this->last();
         sentinel->set_prev(new_node);
         new_node->set_next(sentinel);
-        new_node->set_prev(last);
-        last->set_next(new_node);
+        new_node->set_prev(old_last);
+        old_last->set_next(new_node);
         size++;
+        if (key > current_key) 
+            current_key = key; 
+        current_key++;
         return new_node;
     }
 
-    Node *remove(Node* node) {
-        if (node->list != this) return nullptr;
+    Node *insert(ItemType *item) {
+        return insert(item, current_key);
+    }
+
+    Node *update(ItemType *item, KeyType key) {
+        Node *node = search(key);
+        if (!node) return nullptr;  // falha se o node não existe
+        delete node->item;
+        node->item = item;
+        return node;
+    }
+
+    Node *remove(KeyType key) {
+        Node *node = search(key);
+        if (!node) return nullptr;
+        return remove(node);
+    }
+
+    Node *remove(Node *node) {
+        if (node->list != this) return nullptr; // o node não pertence a essa lista; nada a fazer.
         Node *next, *prev;
         prev = node->get_prev();
         next = node->get_next();
@@ -102,7 +140,7 @@ template <typename ItemType> class List {
     void clear() {
         Node *aux;
         while (!empty()) {
-            aux = search(0);
+            aux = first();
             remove(aux);
             delete aux->item;
             delete aux;
@@ -112,17 +150,17 @@ template <typename ItemType> class List {
     operator std::string() {
         std::string s;
         if(empty()) return s;
-        Node *node = sentinel->next;
+        Node *curr = first();
         for (unsigned i = 0; i < size - 1; i++) {
-            s += std::to_string(*node->item);
+            s += std::to_string(*curr->item);
             s += ' ';
-            node = node->next;
+            curr = curr->next;
         }
-        s += std::to_string(*node->item);
+        s += std::to_string(*curr->item);
         return s;
     }
 };
 
-template <typename T> std::ostream& operator<<(std::ostream& out, List<T>& list) {
+template <typename T, typename K> std::ostream& operator<<(std::ostream& out, List<T, K>& list) {
     return out << std::string(list);
 }
